@@ -1,12 +1,13 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import Navbar from '@/components/Navbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Multiple Homes, Inc. - Baltimore House Flipping Experts',
-  description: 'Transform your property with Multiple Homes, Inc. - Baltimore\'s premier house flipping and renovation experts.',
+  title: 'Multiple Homes Inc. - Property Flipping & Rental Experts',
+  description: 'Expert property flipping and rental services by Tuyi Oluwalade. Transforming neighborhoods and creating value in real estate.',
 }
 
 export default function RootLayout({
@@ -16,7 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} bg-black text-white`}>
+        <Navbar />
+        {children}
+      </body>
     </html>
   )
 }

@@ -1,134 +1,87 @@
-import Image from 'next/image'
-import { Button } from "@/components/ui/button"
+'use client'
+
+import { motion } from 'framer-motion'
+import Link from 'next/link'
+import { useState } from 'react'
+
+const impactData = [
+  { title: 'Properties Flipped', value: 150 },
+  { title: 'Rental Units', value: 300 },
+  { title: 'Neighborhoods Improved', value: 25 },
+  { title: 'Satisfied Clients', value: 500 },
+]
 
 export default function Home() {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="bg-white shadow-md">
-        <div className="container mx-auto px-4 py-6 flex justify-between items-center">
-          <div className="flex items-center">
-            <Image src="/logo-placeholder.svg" alt="Multiple Homes, Inc. Logo" width={50} height={50} />
-            <span className="ml-2 text-2xl font-bold text-gray-800">Multiple Homes, Inc.</span>
-          </div>
-          <nav>
-            <ul className="flex space-x-6">
-              <li><a href="#" className="text-gray-600 hover:text-red-600">Home</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-red-600">Services</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-red-600">Properties</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-red-600">About</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-red-600">Contact</a></li>
-            </ul>
-          </nav>
+    <div className="min-h-screen bg-gradient-to-b from-black to-gray-900">
+      <div className="h-screen flex flex-col justify-center items-center p-4">
+        <motion.div
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-center"
+        >
+          <h1 className="text-6xl md:text-8xl font-bold mb-4 text-white text-shadow">
+            Multiple Homes
+          </h1>
+          <p className="text-xl md:text-2xl mb-8 text-gray-300">
+            Transforming Properties, Building Communities
+          </p>
+        </motion.div>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="flex flex-col md:flex-row gap-4"
+        >
+          <Link href="/properties" className="bg-white text-black px-6 py-3 rounded-full text-lg font-semibold hover:bg-opacity-80 transition-colors duration-300">
+            View Properties
+          </Link>
+          <Link href="/contact" className="bg-transparent border-2 border-white text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-white hover:text-black transition-colors duration-300">
+            Contact Us
+          </Link>
+        </motion.div>
+      </div>
+
+      <section className="py-16 px-4">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-white text-shadow">Our Impact</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+          {impactData.map((item, index) => (
+            <motion.div
+              key={item.title}
+              className="bg-gray-800 p-6 rounded-lg text-center cursor-pointer"
+              whileHover={{ scale: 1.05 }}
+              onHoverStart={() => setHoveredIndex(index)}
+              onHoverEnd={() => setHoveredIndex(null)}
+            >
+              <h3 className="text-xl font-semibold mb-2 text-white">{item.title}</h3>
+              <motion.p
+                className="text-4xl font-bold text-white"
+                initial={{ opacity: 0, y: 20 }}
+                animate={hoveredIndex === index ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.3 }}
+              >
+                {hoveredIndex === index ? item.value : '+'}
+              </motion.p>
+            </motion.div>
+          ))}
         </div>
-      </header>
+      </section>
 
-      <main className="flex-grow">
-        <section className="relative h-[600px]">
-          <Image 
-            src="/placeholder.svg?height=600&width=1920" 
-            alt="Beautiful Baltimore Home" 
-            layout="fill" 
-            objectFit="cover" 
-            className="brightness-50"
-          />
-          <div className="absolute inset-0 flex flex-col justify-center items-center text-white">
-            <h1 className="text-5xl font-bold mb-4">Transform Your Home in Baltimore</h1>
-            <p className="text-xl mb-8">Expert house flipping services to maximize your property's value</p>
-            <Button className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full text-lg">
-              Get Started
-            </Button>
-          </div>
-        </section>
-
-        <section className="py-16 bg-gray-100">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">Our Services</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {['Property Acquisition', 'Renovation & Design', 'Sale & Marketing'].map((service, index) => (
-                <div key={index} className="bg-white p-6 rounded-lg shadow-md">
-                  <h3 className="text-xl font-semibold mb-4">{service}</h3>
-                  <p className="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">Featured Properties</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[1, 2, 3].map((_, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
-                  <Image 
-                    src={`/placeholder.svg?height=300&width=400&text=Property+${index + 1}`} 
-                    alt={`Featured Property ${index + 1}`} 
-                    width={400} 
-                    height={300} 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold mb-2">Beautiful Home in Baltimore</h3>
-                    <p className="text-gray-600 mb-4">3 bed • 2 bath • 1,800 sqft</p>
-                    <Button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                      View Details
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16 bg-red-600 text-white">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold mb-4">Ready to Transform Your Property?</h2>
-            <p className="text-xl mb-8">Let's discuss how we can maximize your home's value in the Baltimore market.</p>
-            <Button className="bg-white text-red-600 hover:bg-gray-100 font-bold py-3 px-6 rounded-full text-lg">
-              Contact Us Today
-            </Button>
-          </div>
-        </section>
-      </main>
-
-      <footer className="bg-gray-800 text-white py-8">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-xl font-semibold mb-4">Multiple Homes, Inc.</h3>
-              <p>Transforming Baltimore properties since 2010</p>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
-              <ul className="space-y-2">
-                <li><a href="#" className="hover:text-red-400">Home</a></li>
-                <li><a href="#" className="hover:text-red-400">Services</a></li>
-                <li><a href="#" className="hover:text-red-400">Properties</a></li>
-                <li><a href="#" className="hover:text-red-400">About</a></li>
-                <li><a href="#" className="hover:text-red-400">Contact</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Contact Us</h4>
-              <p>123 Main St, Baltimore, MD 21201</p>
-              <p>Phone: (410) 555-1234</p>
-              <p>Email: info@multiplehomes.com</p>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Follow Us</h4>
-              <div className="flex space-x-4">
-                <a href="#" className="hover:text-red-400">Facebook</a>
-                <a href="#" className="hover:text-red-400">Twitter</a>
-                <a href="#" className="hover:text-red-400">Instagram</a>
-                <a href="#" className="hover:text-red-400">LinkedIn</a>
-              </div>
-            </div>
-          </div>
-          <div className="mt-8 pt-8 border-t border-gray-700 text-center">
-            <p>&copy; 2023 Multiple Homes, Inc. All rights reserved.</p>
-          </div>
+      <section className="py-16 px-4 bg-gray-900">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">Why Choose Multiple Homes?</h2>
+          <p className="text-lg text-gray-300 mb-8">
+            With years of experience in property flipping and rentals, we've built a reputation for excellence in Baltimore's real estate market. Our commitment to quality renovations and community improvement sets us apart.
+          </p>
+          <Link href="/about" className="bg-white text-black px-6 py-3 rounded-full text-lg font-semibold hover:bg-opacity-80 transition-colors duration-300">
+            Learn More About Us
+          </Link>
         </div>
-      </footer>
+      </section>
     </div>
   )
 }
