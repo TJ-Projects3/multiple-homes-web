@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Multiple Homes landing page website for potential buyers, visitors, and investors. Made with TypeScript, ShadCN UI, Vercel, and more. 
 
 ## Getting Started
 
